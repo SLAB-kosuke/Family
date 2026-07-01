@@ -3,33 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>我が家の予定</title>
+ <title>我が家の予定</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <h1>🏡 我が家の予定</h1>
+<!-- 🔐 ログイン画面 -->
+<div id="loginBox" class="overlay">
+  <div class="modal">
+    <h2>🔐 パスワード入力</h2>
+    <input type="password" id="password" placeholder="パスワード">
+    <button onclick="login()">入る</button>
+  </div>
+</div>
 
-  <div class="card">
-    <input type="date" id="date">
-    <input type="text" id="title" placeholder="予定（例：サッカー・塾など）">
+<!-- 📅 アプリ本体 -->
+<div id="app" style="display:none;">
+
+  <h1>🏡 家族スケジュール </h1>
+
+  <div class="calendar-header">
+    <button onclick="prevMonth()">←</button>
+    <h2 id="monthLabel"></h2>
+    <button onclick="nextMonth()">→</button>
+  </div>
+
+  <div id="calendar" class="calendar"></div>
+
+</div>
+
+<!-- ➕ 入力モーダル -->
+<div id="inputModal" class="overlay" style="display:none;">
+  <div class="modal">
+    <h3 id="selectedDate"></h3>
+
+    <input type="text" id="title" placeholder="予定">
     
     <select id="person">
-      <option>父上</option></option>
-      <option>母上</option>
-      <option>桃</option>
-      <option>晴</option>
+      <option>パパ</option>
+      <option>ママ</option>
+      <option>トウカ</option>
+      <option>ヒヨリ</option>
       <option>祖母</option>
       <option>祖父</option>
     </select>
 
-    <button onclick="addSchedule()">追加</button>
+    <button onclick="saveSchedule()">保存</button>
+    <button onclick="closeModal()">閉じる</button>
   </div>
+</div>
 
-  <h2>📅 予定一覧</h2>
-  <div id="list"></div>
-
-  <!-- Firebase -->
-  <script type="module" src="app.js"></script>
+<script type="module" src="app.js"></script>
 </body>
 </html>
