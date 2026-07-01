@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>我が家の予定</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>🏡 我が家の予定</h1>
+
+  <div class="card">
+    <input type="date" id="date">
+    <input type="text" id="title" placeholder="予定（例：サッカー・塾など）">
+    
+    <select id="person">
+      <option>父上</option></option>
+      <option>母上</option>
+      <option>桃</option>
+      <option>晴</option>
+      <option>祖母</option>
+      <option>祖父</option>
+    </select>
+
+    <button onclick="addSchedule()">追加</button>
+  </div>
+
+  <h2>📅 予定一覧</h2>
+  <div id="list"></div>
+
+  <!-- Firebase -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
