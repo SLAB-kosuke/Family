@@ -1,5 +1,8 @@
-// Firebase（v10 modular）
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+// Firebase SDK
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+// 👉 Firestoreも追加（ここが重要）
 import {
   getFirestore,
   collection,
@@ -7,29 +10,40 @@ import {
   onSnapshot,
   query,
   orderBy
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+} from "firebase/firestore";
 
-// 🔧 Firebase設定（ここを自分のに変更）
+// Firebase設定
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "XXXX",
-  appId: "XXXX"
+  apiKey: "AIzaSyBGeCs9-gsS66uCZ9HqEsbSqNv4_dOE5Bg",
+  authDomain: "family-calendar-38bf7.firebaseapp.com",
+  projectId: "family-calendar-38bf7",
+  storageBucket: "family-calendar-38bf7.firebasestorage.app",
+  messagingSenderId: "419708212606",
+  appId: "1:419708212606:web:fc89ed052d38c41787cf2f",
+  measurementId: "G-ZKHECSN6CV"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+// 🔥 Firestore初期化
 const db = getFirestore(app);
 const col = collection(db, "familySchedule");
 
-// 追加
+
+// ==========================
+// 予定追加
+// ==========================
 window.addSchedule = async function () {
   const date = document.getElementById("date").value;
   const title = document.getElementById("title").value;
   const person = document.getElementById("person").value;
 
-  if (!date || !title) return alert("入力してください");
+  if (!date || !title) {
+    alert("日付と予定を入力してください");
+    return;
+  }
 
   await addDoc(col, {
     date,
@@ -41,18 +55,22 @@ window.addSchedule = async function () {
   document.getElementById("title").value = "";
 };
 
-// リアルタイム表示
+
+// ==========================
+// リアルタイム取得
+// ==========================
 const q = query(col, orderBy("date", "asc"));
 
 onSnapshot(q, (snapshot) => {
   const list = document.getElementById("list");
   list.innerHTML = "";
 
-  snapshot.forEach(doc => {
+  snapshot.forEach((doc) => {
     const d = doc.data();
 
     const el = document.createElement("div");
     el.className = "item";
+
     el.innerHTML = `
       <div>📅 ${d.date}</div>
       <div>👤 ${d.person}</div>
